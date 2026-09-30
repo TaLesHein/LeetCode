@@ -4,6 +4,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+        SearchInsertLog([1, 3, 5, 6], 2);
         Console.WriteLine("Hello, World!");
     }
 
@@ -134,6 +135,7 @@ internal class Program
         return quantity;
     }
 
+    // O(n)
     public static int SearchInsert(int[] nums, int target)
     {
         var index = 1;
@@ -144,6 +146,27 @@ internal class Program
         }
 
         return index;
+    }
+
+    // O(log n)
+    public static int SearchInsertLog(int[] nums, int target)
+    {
+        var left = 0;
+        var right = nums.Length - 1;
+
+        if (nums[left] > target) return left;
+        else if (nums[right] < target) return right + 1;
+
+        while (left <= right)
+        {
+            var mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) return mid;
+            else if (nums[mid] < target) left = mid + 1;
+            else right = mid - 1;
+        }
+
+        return left;
     }
 
     public IList<IList<int>> ThreeSum(int[] nums)
